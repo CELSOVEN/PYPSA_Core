@@ -1,0 +1,71 @@
+PASO 3 - CREAR EL MODULO ACTIVITY REAL EN PYPSA CORE
+VERSION 0.1.1
+====================================================
+
+ESTE ZIP ES PARA:
+D:\00_Desarrollo\PYPSA_Core
+
+IMPORTANTE
+----------
+Tu primer intento de PYPSA_Core contenía:
+    pypsa_core\activity\models.py
+Ese archivo NO forma parte de esta arquitectura y conviene retirarlo.
+
+FORMA MAS SEGURA DE APLICAR ESTE ZIP
+------------------------------------
+1. Renombra temporalmente tu carpeta actual:
+       PYPSA_Core  ->  PYPSA_Core_RESPALDO
+2. Crea una carpeta nueva:
+       D:\00_Desarrollo\PYPSA_Core
+3. Descomprime TODO el contenido de este ZIP dentro de esa carpeta nueva.
+4. Debes terminar con:
+
+   D:\00_Desarrollo\PYPSA_Core\
+       pyproject.toml
+       requirements.txt
+       README.md
+       CHANGELOG.md
+       src\
+           pypsa_core\
+               __init__.py
+               activity\
+                   __init__.py
+                   contracts.py
+                   domain.py
+                   service.py
+       tests\
+           test_activity_domain.py
+           test_activity_service.py
+
+5. NO cambies todavía PYPSA Project Hub. Ya está validado localmente y en Render.
+6. La conexión Project Hub -> PYPSA Core será el PASO 4.
+
+INSTALACION Y VALIDACION
+------------------------
+En PowerShell:
+
+   cd D:\00_Desarrollo\PYPSA_Core
+   py -m pip install -r requirements.txt
+   py -m unittest discover -s tests -v
+
+Resultado esperado: todas las pruebas deben terminar en OK.
+
+COMO SE REPARTEN LAS RESPONSABILIDADES
+--------------------------------------
+requirements.txt
+    Es el comando sencillo de entrada para instalar el entorno del proyecto.
+    Contiene `-e .`, que instala el paquete local en modo editable.
+
+pyproject.toml
+    Describe el paquete Python: nombre, version, Python minimo, sistema de
+    construccion y dependencias reales. Pip lee este archivo al instalar `-e .`.
+
+DECISION ARQUITECTONICA IMPORTANTE
+----------------------------------
+SesionNavegacion NO se mueve todavía al Core porque hoy hereda de db.Model y
+por tanto está ligado a Flask-SQLAlchemy de cada aplicación.
+
+PYPSA Core contiene la LOGICA COMUN y define un contrato de repositorio.
+Cada aplicación conservará su modelo de BD y tendrá un pequeño adaptador.
+Esto permite que Project Hub e Info EK-Balam reutilicen la misma lógica sin
+obligarlos a tener exactamente la misma estructura interna.

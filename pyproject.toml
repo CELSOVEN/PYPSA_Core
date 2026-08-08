@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypsa-core"
+version = "0.1.1"
+description = "Componentes reutilizables para aplicaciones internas de PYPSA."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "PYPSA" }
+]
+dependencies = [
+  "tzdata; platform_system == 'Windows'",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

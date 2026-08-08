@@ -1,0 +1,3 @@
+# Instala PYPSA Core en modo editable y, a través de pyproject.toml,
+# instala también sus dependencias declaradas.
+-e .
